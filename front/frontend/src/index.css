@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+/* @theme {
+  --font-edu: "Edu QLD Hand", cursive;
+} */
+
+
+@theme {
+  --font-edu: "Edu QLD Hand", cursive;
+}
