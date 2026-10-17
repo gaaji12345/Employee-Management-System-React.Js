@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import authRTouter from './rotes/auth.js'
+import departmentRouter from './rotes/department.js'
 import conectToDataBase from './db/db.js'
 
 
@@ -9,6 +10,7 @@ const app =express()
 app.use(cors())
 app.use(express.json())
 app.use('/api/auth',authRTouter)
+app.use('/api/department',departmentRouter)
 
 
 app.listen(process.env.PORT,()=>{
