@@ -10,21 +10,43 @@ const DepartmenList = () => {
   
   const [departments, setDepartments]=useState([])
   const [depLoading,setDepLoading]=useState(false)
-  const [filteredDepartments,setFilteredDepartments]=useState([])
+  const [filterdDepartments,setFilteredDepartments]=useState([])
 
-   const onDepartmentDelete=async (id)=>{
-    const data =departments.filter(dep => dep._id !== id)
-    setDepartments(data)
+  //  const onDepartmentDelete=async (id)=>{
+  //   const data =departments.filter(dep => dep._id !== id)
+  //   setDepartments(data)
 
-   }
+  //  }
 
+//   const onDepartmentDelete = (id) => {
+//   const updatedDepartments = departments.filter(
+//     (dep) => dep._id !== id
+//   );
+
+//   setDepartments(updatedDepartments);
+//   setFilteredDepartments(updatedDepartments);
+// };
+    
+const onDepartmentDelete = (id) => {
+  setDepartments((prevDepartments) => {
+    const updatedDepartments = prevDepartments.filter(
+      (dep) => dep._id !== id
+    );
+
+    setFilteredDepartments((prevFiltered) =>
+      prevFiltered.filter((dep) => dep._id !== id)
+    );
+
+    return updatedDepartments;
+  });
+};
   useEffect(()=>{
     setDepLoading(true)
     const fetchDepartments =async () =>{
       try{
        const response = await axios.get('http://localhost:6007/api/department',{
         headers : {
-          "Authorization" : `Berer ${localStorage.getItem('token')}`
+          "Authorization" : `Bearer ${localStorage.getItem('token')}`
         }
        })
        if(response.data.success){
@@ -75,8 +97,8 @@ const DepartmenList = () => {
         <Link to='/admin-dashboard/add-department' className='px-4 py-1 bg-teal-500 rounded text-white' >Add New Department</Link> 
 
        </div>
-       <div> 
-        <DataTable columns={coloumns} data={filterDepartments} pagination />
+       <div className='mt-5'> 
+        <DataTable columns={coloumns} data={filterdDepartments} pagination />
        </div>
 
     </div>
