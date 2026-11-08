@@ -165,12 +165,12 @@ const handleDepartment = async (e) => {
         navigate("/admin-dashboard/employees");
       }
     } catch (error) {
-      console.error("Update employee error:", error.response?.data || error);
+      console.error("salary error:", error.response?.data || error);
 
       alert(
         error.response?.data?.error ||
           error.response?.data?.message ||
-          "Failed to update employee",
+          "Failed to add Salary",
       );
     }
   
@@ -301,8 +301,7 @@ const handleDepartment = async (e) => {
               </div>
 
 
-              
-
+    
             
             </div>
             <button

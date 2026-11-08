@@ -1,12 +1,13 @@
 import express from "express"
 import authMiddleware from '../middleware/authMiddleware.js'
-import { addsalary } from "../controller/salaryController.js"
+import { addsalary,getSalary } from "../controller/salaryController.js"
 
 const router =express.Router()
 
 
 router.post('/add',authMiddleware,addsalary)
 
+router.get('/:id',authMiddleware,getSalary)
 
 
 

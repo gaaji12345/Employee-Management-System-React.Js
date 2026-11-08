@@ -133,21 +133,7 @@ const addEmployee = async (req, res) => {
   }
 };
 
-// const getEmployees =async (req,res)=>{
 
-//     try{
-//         const employess= await Employee.find().populate('userId',{password : 0}).populate("department")
-//         return res.status(200).json({success:true,employess})
-
-//     }catch(error){  
-
-//    return res.status(500).json({success: false,error:"get employee server error"})
-
-
-//     }
-
-
-// }
 
 const getEmployees = async (req, res) => {
   try {
@@ -172,10 +158,20 @@ const getEmployees = async (req, res) => {
 
 const getEmployee = async (req, res) => {
   const {id }=req.params;
+
   try {
-    const employee = await Employee.findById({_id: id})
+    let employee;
+
+    employee = await Employee.findById({_id: id})
       .populate("userId", { password: 0 })
       .populate("department");
+      if(!employee){
+        employee = await Employee.findOne({userId: id})
+      .populate("userId", { password: 0 })
+      .populate("department");
+
+
+      }
 
     return res.status(200).json({
       success: true,
@@ -262,84 +258,7 @@ const updateEmployee = async (req, res) => {
 };
 
 
-// const fetchEmployeeByDepId= async(req,res) =>{
-//  const {id }=req.params;
-//   try {
-//     const employee = await Employee.find({department: id})
-      
-//     return res.status(200).json({
-//       success: true,
-//       employee,
-//     });
-//   } catch (error) {
-//     console.error("Get employees error:", error);
 
-//     return res.status(500).json({
-//       success: false,
-//       error: "Failed to fetch employees",
-//     });
-//   }
-// }
-
-
-// const fetchEmployeeByDepId = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-
-//     console.log("Selected Department ID:", id);
-
-//     // Check all employees and their department values
-//     const allEmployees = await Employee.find({})
-//       .select("_id employeeId department userId");
-
-//     console.log("All employees:", allEmployees);
-
-//     // Fetch employees belonging to the selected department
-//     const employee = await Employee.find({
-//       department: id,
-//     }).populate("userId", "name");
-
-//     console.log("Filtered employees:", employee);
-
-//     return res.status(200).json({
-//       success: true,
-//       employee,
-//     });
-//   } catch (error) {
-//     console.error("Get employees error:", error);
-
-//     return res.status(500).json({
-//       success: false,
-//       error: "Failed to fetch employees",
-//     });
-//   }
-// };
-
-// const fetchEmployeeByDepId = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-
-//     console.log("Selected Department ID:", id);
-
-//     const employees = await Employee.find({
-//       department: id,
-//     }).populate("userId", "name");
-
-//     console.log("Filtered employees:", JSON.stringify(employees, null, 2));
-
-//     return res.status(200).json({
-//       success: true,
-//       employee: employees,
-//     });
-//   } catch (error) {
-//     console.error("Get employees error:", error);
-
-//     return res.status(500).json({
-//       success: false,
-//       error: "Failed to fetch employees",
-//     });
-//   }
-// };
 
 
 

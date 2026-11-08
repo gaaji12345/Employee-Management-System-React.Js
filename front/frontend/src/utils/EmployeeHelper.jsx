@@ -175,10 +175,12 @@ export const EmployeeButtons = ({ Id }) => {
 
       <button
         className="px-3 py-1 bg-red-600 text-white rounded"
-        onClick={() => navigate(`/admin-dashboard/employees/${Id}/leave`)}
+        onClick={() => navigate(`/admin-dashboard/employees/leaves/${Id} `)}
       >
         Leave
       </button>
     </div>
   );
 };
+
+

@@ -26,6 +26,14 @@ const salarySchema = new mongoose.Schema(
 
     },
 
+      netSalary: {
+      type: Number,
+      
+
+    },
+
+
+
     payDate: {
       type: Date,
       required: true,
