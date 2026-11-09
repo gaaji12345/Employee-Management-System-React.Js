@@ -105,6 +105,8 @@ useEffect(() => {
 
 
 
+
+
 const changeStatus = async (id, status) => {
   try {
     const token = localStorage.getItem("token");
@@ -119,21 +121,17 @@ const changeStatus = async (id, status) => {
       }
     );
 
+    console.log("Updated Leave:", response.data);
+
     if (response.data.success) {
       alert(`Leave ${status} successfully`);
       navigate("/admin-dashboard/leaves");
     }
 
   } catch (error) {
-    console.error(
-      "Change Leave Status Error:",
-      error.response?.data || error.message
-    );
+    console.error("Update Error:", error.response?.data || error.message);
 
-    alert(
-      error.response?.data?.error ||
-      "Failed to update leave status"
-    );
+    alert(error.response?.data?.error || "Failed to update leave status");
   }
 };
 

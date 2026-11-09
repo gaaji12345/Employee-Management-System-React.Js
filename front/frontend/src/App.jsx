@@ -65,6 +65,9 @@ function App() {
          <Route path="leaves/:id" element={<Details />} />
          <Route path="employees/leaves/:id" element={<ListL />} />
 
+       <Route path="setting" element={<Setting />} />
+
+
 
 
 
@@ -89,7 +92,7 @@ function App() {
             element={<View />}
           ></Route>
           {/* <Route path="/employee-dashboard/levaes" element={<ListL/>}></Route> */}
-          <Route path="/employee-dashboard/leaves" element={<ListL />} />
+          <Route path="/employee-dashboard/leaves/:id" element={<ListL />} />
           <Route path="/employee-dashboard/add-leave" element={<AddL />} />
           {/* <Route path="/employee-dashboard/salary/id" element={< ViewS/>} /> */}
           <Route path="/employee-dashboard/salary/:id" element={<ViewS />} />

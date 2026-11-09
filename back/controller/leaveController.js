@@ -134,12 +134,62 @@ const addleave = async (req, res) => {
 // };
 
 
+// const getLeaves = async (req, res) => {
+
+//    let employee;
+
+//   try {
+//     const { id } = req.params;
+//     let leave=await Leave.find({employeeId:id})
+    
+//     if(!leave){
+//     employee   = await Employee.findOne({ userId: id });
+
+//     }
+
+
+//     // Find employee using the user's MongoDB ID
+
+//     // if (!employee) {
+//       return res.status(404).json({
+//         success: false,
+//         error: "Employee not found",
+//       });
+//     // }
+
+//     // Fetch leaves belonging to this employee
+//     const leaves = await Leave.find({
+//       employeeId: employee._id,
+//     }).sort({ createdAt: -1 });
+
+//     return res.status(200).json({
+//       success: true,
+//       leaves: leaves,
+//     });
+
+//   } catch (error) {
+//     console.error("Get leaves error:", error);
+
+//     return res.status(500).json({
+//       success: false,
+//       error: "Failed to fetch leaves",
+//     });
+//   }
+// };
+
 const getLeaves = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Find employee using the user's MongoDB ID
-    const employee = await Employee.findOne({ userId: id });
+    console.log("Requested Employee ID:", id);
+
+    // First, find employee using Employee document ID
+    let employee = await Employee.findById(id);
+
+    // If not found, try finding employee using user ID
+    if (!employee) {
+      employee = await Employee.findOne({ userId: id });
+    }
 
     if (!employee) {
       return res.status(404).json({
@@ -148,14 +198,16 @@ const getLeaves = async (req, res) => {
       });
     }
 
-    // Fetch leaves belonging to this employee
+    // Find all leaves belonging to this employee
     const leaves = await Leave.find({
       employeeId: employee._id,
     }).sort({ createdAt: -1 });
 
+    console.log("Found Leaves:", leaves);
+
     return res.status(200).json({
       success: true,
-      leaves: leaves,
+      leaves,
     });
 
   } catch (error) {
@@ -264,24 +316,73 @@ const getLeaveDetail = async (req, res) => {
 };
 
 
-const updateLeave=async(req,res)=>{
-  try{
-      const {id}=req.params;
-      const leave = await Leave.findByIdAndUpdate({_id:id},{status:req.body.status})
-      if(!leave){
-        return res.status(404).json({success:false,error:"Levae Not Found"})
+// const updateLeave=async(req,res)=>{
+//   try{
+//       const {id}=req.params;
+//       const leave = await Leave.findByIdAndUpdate({_id:id},{status:req.body.status})
+//       if(!leave){
+//         return res.status(404).json({success:false,error:"Levae Not Found"})
+//       }
+//       return res.status(200).json({success:true})
+
+
+
+
+//   }catch(error){
+//     console.log(error.message)
+//     return res.status(500).json({success:false,error:"levae updated server error"})
+
+//   }
+// }
+
+const updateLeave = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    console.log("Leave ID:", id);
+    console.log("New Status:", status);
+
+    // Validate status
+    if (!["Pending", "Approved", "Rejected"].includes(status)) {
+      return res.status(400).json({
+        success: false,
+        error: "Invalid leave status"
+      });
+    }
+
+    // Update leave
+    const leave = await Leave.findByIdAndUpdate(
+      id,
+      { status: status },
+      {
+        new: true,
+        runValidators: true
       }
-      return res.status(200).json({success:true})
+    );
 
+    if (!leave) {
+      return res.status(404).json({
+        success: false,
+        error: "Leave Not Found"
+      });
+    }
 
+    return res.status(200).json({
+      success: true,
+      message: "Leave status updated successfully",
+      leave
+    });
 
+  } catch (error) {
+    console.log("Update Leave Error:", error);
 
-  }catch(error){
-    console.log(error.message)
-    return res.status(500).json({success:false,error:"levae updated server error"})
-
+    return res.status(500).json({
+      success: false,
+      error: "Leave update server error"
+    });
   }
-}
+};
 
 
 
