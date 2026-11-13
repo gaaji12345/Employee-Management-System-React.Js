@@ -126,9 +126,11 @@ import axios from "axios";
 import { useAuth } from "../../context/authContext";
 import { Link, useParams } from "react-router-dom";
 
+
 const ListL = () => {
   const { user } = useAuth();
   const { id } = useParams();
+  
 
   // Admin uses URL ID; employee uses logged-in user ID
   const employeeId = id || user?._id;
@@ -148,7 +150,7 @@ const ListL = () => {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-          `http://localhost:6007/api/leave/${employeeId}`,
+          `http://localhost:6007/api/leave/${employeeId}/${user.role}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

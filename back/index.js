@@ -6,6 +6,8 @@ import employeeRouter from './rotes/employee.js'
 import salaryRouter from './rotes/salary.js'
 import leaveRouter from './rotes/leave.js'
 import settingRouter from './rotes/setting.js'
+import dashBoardRouter from './rotes/dashboard.js'
+
 import conectToDataBase from './db/db.js'
 
 
@@ -21,6 +23,8 @@ app.use('/api/employee',employeeRouter)
 app.use('/api/salary',salaryRouter)
 app.use('/api/leave',leaveRouter)
 app.use('/api/setting',settingRouter)
+app.use('/api/dashboard',dashBoardRouter)
+
 
 
 

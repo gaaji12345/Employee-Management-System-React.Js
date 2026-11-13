@@ -124,6 +124,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../../context/authContext";
 
 const ViewS = () => {
   const { id } = useParams();
@@ -132,6 +133,7 @@ const ViewS = () => {
   const [filteredSalaries, setFilteredSalaries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const {user}=useAuth()
 
   useEffect(() => {
     const fetchSalaries = async () => {
@@ -139,7 +141,7 @@ const ViewS = () => {
         setLoading(true);
 
         const response = await axios.get(
-          `http://localhost:6007/api/salary/${id}`,
+          `http://localhost:6007/api/salary/${id}/${user.role}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,

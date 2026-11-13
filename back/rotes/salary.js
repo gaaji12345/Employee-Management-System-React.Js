@@ -7,7 +7,7 @@ const router =express.Router()
 
 router.post('/add',authMiddleware,addsalary)
 
-router.get('/:id',authMiddleware,getSalary)
+router.get('/:id/:role',authMiddleware,getSalary)
 
 
 

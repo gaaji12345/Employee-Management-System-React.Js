@@ -6,8 +6,9 @@ const router =express.Router()
 
 
 router.post('/add',authMiddleware,addleave)
-router.get('/:id',authMiddleware,getLeaves)
 router.get('/detail/:id',authMiddleware,getLeaveDetail)
+router.get('/:id/:role',authMiddleware,getLeaves)
+
 router.get('/',authMiddleware,getLeave)
 router.put('/:id',authMiddleware,updateLeave)
 

@@ -59,7 +59,7 @@ const AddL = () => {
 
       if (response.data.success) {
         alert("Leave request submitted successfully!");
-        navigate("/employee-dashboard/leaves");
+        navigate(`/employee-dashboard/leaves/${user._id}`);
       }
     } catch (error) {
       console.error(

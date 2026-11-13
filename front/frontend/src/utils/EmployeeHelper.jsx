@@ -1,6 +1,8 @@
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/authContext";
+// import { useAuth } from "../context/useAuth";
 
 export const coloumns = [
   {
@@ -146,6 +148,7 @@ export const getEmployees = async (departmentId) => {
 
 export const EmployeeButtons = ({ Id }) => {
   const navigate = useNavigate();
+  // const {user} = useAuth()
 
   return (
     <div className="flex space-x-2">

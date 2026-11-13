@@ -85,19 +85,54 @@ const editDepartment = async (req, res) => {
 };
 
 
-const deleteDepartment = async (req,res)=>{
-  try{
-    const {id}=req.params;
-    const deletedep= await Department.findByIdAndDelete({_id: id})
-    return res.status(200).json({success:true,deletedep})
+// const deleteDepartment = async (req,res)=>{
+//   try{
+//     const {id}=req.params;
+//     const deletedep= await Department.findById({_id: id})
+//     await deletedep.deleteOne()
+//     return res.status(200).json({success:true,deletedep})
 
-  }catch(error){
+//   }catch(error){
+//     return res.status(500).json({
+//       success: false,
+//       error: "delete department server error"
+//     });
+//   }
+// }
+
+const deleteDepartment = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Find department
+    const department = await Department.findById(id);
+
+    if (!department) {
+      return res.status(404).json({
+        success: false,
+        error: "Department not found"
+      });
+    }
+
+    // Delete department
+    await department.deleteOne();
+
+    return res.status(200).json({
+      success: true,
+      message: "Department deleted successfully"
+    });
+
+  } catch (error) {
+    console.error("Delete Department Error:", error);
+
     return res.status(500).json({
       success: false,
-      error: "delete department server error"
+      error: error.message
     });
   }
-}
+};
+
+
 
 
 
